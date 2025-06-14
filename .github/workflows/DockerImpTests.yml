@@ -1,24 +1,21 @@
 name: Playwright C# UI Tests in Docker
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:  # 👈 This allows manual run from GitHub Actions UI
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
+      - name: 🔨 Build Docker image
         run: docker build -t playwright-csharp-ui-tests .
 
-      - name: Run tests in Docker
+      - name: 🧪 Run tests in Docker
         run: docker run --rm playwright-csharp-ui-tests
