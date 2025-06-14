@@ -1,0 +1,8 @@
+{
+  "Environment": "qa",
+  "BaseUrl": "https://demo.playwright.dev/todomvc",
+  "Timeout": 10000,
+  "RetryCount": 3,
+  "Headless": true,
+  "TakeScreenshotOnFailure": true
+}
