@@ -2,9 +2,9 @@ name: 🧪 Run Playwright UI Tests
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   playwright-ui-tests:
@@ -19,14 +19,17 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: 📦 Restore dependencies
+      - name: 📦 Restore NuGet packages
         run: dotnet restore
 
-      - name: 🔨 Build project
+      - name: 🔨 Build the project
         run: dotnet build --configuration Release
 
+      - name: 💡 Restore .NET Tools (like dotnet-playwright)
+        run: dotnet tool restore
+
       - name: 🚀 Install Playwright browsers
-        run: pwsh bin/Debug/net8.0/playwright.ps1 install
+        run: dotnet playwright install
 
       - name: 🧪 Run UI tests
         run: dotnet test --configuration Release --logger "console;verbosity=detailed"
