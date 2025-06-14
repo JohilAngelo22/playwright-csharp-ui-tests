@@ -13,9 +13,9 @@ namespace PlaywrightTestFramework.Tests;
 [AllureNUnit]
 public class TodosTests
 {
-    private IPlaywright _playwright;
-    private IBrowser _browser;
-    private IPage _page;
+    private IPlaywright? _playwright;
+    private IBrowser? _browser;
+    private IPage? _page;
 
     [SetUp]
     public async Task SetUp()
@@ -33,7 +33,7 @@ public class TodosTests
     [AllureFeature("Demo Test")]
     public async Task AddAndToggleTodo_ShouldMarkItemCompleted()
     {
-        var todo = new TodosPage(_page);
+        var todo = new TodosPage(_page!);
         await todo.NavigateAsync();
 
         const string todoText = "Write awesome Playwright tests";
@@ -42,7 +42,7 @@ public class TodosTests
         Assert.That(await todo.GetFirstTodoTextAsync(), Is.EqualTo(todoText));
 
         await todo.ToggleFirstTodoAsync();
-        var classAttr = await _page.Locator("ul.todo-list li:first-child")
+        var classAttr = await _page!.Locator("ul.todo-list li:first-child")
                                     .GetAttributeAsync("class");
         Assert.That(classAttr, Does.Contain("completed"));
     }
@@ -56,13 +56,13 @@ public class TodosTests
             Directory.CreateDirectory("Screenshots");
             var file = Path.Combine("Screenshots",
                       $"{TestContext.CurrentContext.Test.Name + DateTime.Today.ToString("dd MM yyyy hh mm ss")}.png");
-            await _page.ScreenshotAsync(new PageScreenshotOptions { Path = file });
+            await _page!.ScreenshotAsync(new PageScreenshotOptions { Path = file });
             Console.WriteLine($"Screenshot saved to: {Path.GetFullPath(file)}");
             AllureLifecycle.Instance.AddAttachment("Failure Screenshot", "image/png", file);
 
         }
 
-        await _browser.CloseAsync();
-        _playwright.Dispose();
+        await _browser!.CloseAsync();
+        _playwright!.Dispose();
     }
 }
