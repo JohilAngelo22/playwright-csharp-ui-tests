@@ -55,7 +55,7 @@ public class TodosTests
         {
             Directory.CreateDirectory("Screenshots");
             var file = Path.Combine("Screenshots",
-                      $"{TestContext.CurrentContext.Test.Name + DateTime.Today.ToString("dd MM yyyy hh mm ss ff")}.png");
+                      $"{TestContext.CurrentContext.Test.Name + DateTime.Today.ToString("dd MM yyyy hh mm ss")}.png");
             await _page.ScreenshotAsync(new PageScreenshotOptions { Path = file });
             Console.WriteLine($"Screenshot saved to: {Path.GetFullPath(file)}");
             AllureLifecycle.Instance.AddAttachment("Failure Screenshot", "image/png", file);
