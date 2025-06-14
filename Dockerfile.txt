@@ -1,0 +1,21 @@
+﻿# Dockerfile for running Playwright UI tests in CI/CD
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Install dependencies for Chromium browser
+RUN apt-get update && apt-get install -y \
+    wget gnupg libnss3 libatk1.0-0 libatk-bridge2.0-0 \
+    libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
+    libxdamage1 libxfixes3 libxrandr2 libgbm1 \
+    libasound2 libpangocairo-1.0-0 libgtk-3-0
+
+WORKDIR /app
+
+COPY . .
+
+RUN dotnet tool restore
+RUN dotnet restore
+RUN dotnet playwright install
+RUN dotnet build --configuration Release
+RUN dotnet test --configuration Release --logger "console;verbosity=detailed" --results-directory Reports/Allure/results
+
+CMD ["dotnet", "test", "--configuration", "Release"]
