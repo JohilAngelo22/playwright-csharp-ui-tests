@@ -166,7 +166,7 @@ PRs, feature requests, and ideas are welcome! Feel free to fork and suggest enha
 
 ### 📜 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE)
 
 ---
 
