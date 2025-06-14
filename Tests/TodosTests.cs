@@ -23,7 +23,7 @@ public class TodosTests
         AllureReports.Configure();
         _playwright = await Playwright.CreateAsync();
         _browser = await _playwright.Chromium.LaunchAsync(
-                        new BrowserTypeLaunchOptions { Headless = false });
+                        new BrowserTypeLaunchOptions { Headless = true });
         _page = await _browser.NewPageAsync();
 
     }
