@@ -25,13 +25,20 @@ jobs:
       - name: 🔨 Build the project
         run: dotnet build --configuration Release
 
-      - name: 📥 Install Node.js (for Playwright)
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: 💡 Restore .NET Tools (like dotnet-playwright)
+        run: dotnet tool restore
 
       - name: 🚀 Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: dotnet playwright install
 
       - name: 🧪 Run UI tests
         run: dotnet test --configuration Release --logger "console;verbosity=detailed"
+
+      - name: 📸 Upload Screenshots if failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            ./Screenshots/
+            **/*.png
